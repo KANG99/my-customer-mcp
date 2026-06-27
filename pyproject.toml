@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "my-customer-mcp"
+version = "0.1.0"
+description = "Customer MCP project with FastMCP and data analysis tools"
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp",
+    "fastapi",
+    "pandas",
+    "matplotlib",
+    "seaborn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "uv",
+    "pytest",
+    "ruff",
+    "black",
+]
