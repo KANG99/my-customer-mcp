@@ -2,6 +2,7 @@ from fastmcp import FastMCP
 from tools.weather import get_weather
 from tools.time_tool import get_time
 from tools.calculator import calculate
+from tools.hello_user import get_username
 
 
 mcp = FastMCP("my-first-server")
@@ -9,6 +10,7 @@ mcp = FastMCP("my-first-server")
 mcp.tool(get_weather)
 mcp.tool(get_time)
 mcp.tool(calculate)
+mcp.tool(get_username)
 
 
 if __name__ == "__main__":

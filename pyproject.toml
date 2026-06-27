@@ -13,6 +13,9 @@ dependencies = [
     "pandas",
     "matplotlib",
     "seaborn",
+    "langchain",
+    "langchain-mcp-adapters",
+    "langchain-ollama",
 ]
 
 [project.optional-dependencies]
