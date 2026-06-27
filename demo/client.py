@@ -1,13 +1,9 @@
 import asyncio
-import os
 from fastmcp import Client
 
 
 async def main():
-    # # 连接stdio传输上的mcp服务
-    # server_path = os.path.join(os.path.dirname(__file__), "server.py")
-    # client = Client(server_path)
-    client = Client("http://localhost:8000/mcp")# 连接http传输上的mcp服务
+    client = Client("http://localhost:8000/mcp")  # 连接http传输上的mcp服务
     async with client:
         tools = await client.list_tools()
         print("Available tools:")
@@ -16,10 +12,23 @@ async def main():
         print("\n" + "=" * 50 + "\n")
 
         result = await client.call_tool(
-            "get_weather",
-            {"city": "Tokyo"}
-        )
+              "get_weather",
+              {"city": "Tokyo"}
+          )
         print(f"Weather result: {result}")
+
+        # --- Resources example ---
+        resources = await client.list_resources()
+        print("\n" + "=" * 50)
+        print("Available resources:")
+        for r in resources:
+            print(f" - {r.uri}: {r.description or '(no description)'}")
+        print("\n" + "=" * 50 + "\n")
+
+        contents = await client.read_resource("resource://resume/黄金叹")
+        print("Resource content:")
+        for c in contents:
+            print(c.text if hasattr(c, "text") else c)
 
 
 if __name__ == "__main__":
