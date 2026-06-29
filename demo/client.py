@@ -1,9 +1,10 @@
 import asyncio
 from fastmcp import Client
+from mock_user_token import generate_mock_token
 
 
 async def main():
-    client = Client("http://localhost:8000/mcp")  # 连接http传输上的mcp服务
+    client = Client("http://localhost:8000/mcp",auth=generate_mock_token())  # 连接http传输上的mcp服务
     async with client:
         tools = await client.list_tools()
         print("Available tools:")
@@ -12,7 +13,7 @@ async def main():
         print("\n" + "=" * 50 + "\n")
 
         result = await client.call_tool(
-              "get_weather",
+              "get_weather_tool",
               {"city": "Tokyo"}
           )
         print(f"Weather result: {result}")

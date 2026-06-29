@@ -22,6 +22,8 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_ollama import ChatOllama
 
+from mock_user_token import generate_mock_token
+
 
 class McpToolExecutor:
     # 执行器: LLM 选择工具后, 这里实际调用你的 MCP 服务
@@ -29,8 +31,9 @@ class McpToolExecutor:
     def __init__(self) -> None:
         self.client = MultiServerMCPClient({
              "my-mcp-server": {
-                 "transport": "streamable_http",
+                 "transport": "streamable-http",
                  "url": "http://localhost:8000/mcp",
+                 "headers": {"Authorization": f'Bearer {generate_mock_token()}'},
              },
          })
         self.tools_map: dict[str, Any] | None = {}
@@ -84,12 +87,12 @@ async def demo_single() -> None:
         max_tokens=4096,
         top_p=0.80, 
         top_k=20,  
-        reasoning=False,
+        # reasoning=False,
      ).bind_tools(tool_defs)
 
      # ---------- 示例 A: LLM 自主调用 get_time ----------
     print("\n--- 示例 A: 查询时间 (LLM 自主发现并调用) ---")
-    messages_a = [HumanMessage(content="现在几点了?")]
+    messages_a = [HumanMessage(content="国内现在几点了?")]
     response_a = await llm_with_tools.ainvoke(messages_a)
 
      # 检查 LLM 是否调用了工具
