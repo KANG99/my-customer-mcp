@@ -1,10 +1,15 @@
 import asyncio
 from fastmcp import Client
 from mock_user_token import generate_mock_token
+import os
+import dotenv
+
+dotenv.load_dotenv()
+
 
 
 async def main():
-    client = Client("http://localhost:8000/mcp",auth=generate_mock_token())  # 连接http传输上的mcp服务
+    client = Client("http://localhost:8000/mcp",auth=os.environ["AUTHORIZATION"])  # 连接http传输上的mcp服务
     async with client:
         tools = await client.list_tools()
         print("Available tools:")

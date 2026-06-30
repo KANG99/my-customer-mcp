@@ -16,9 +16,11 @@ dependencies = [
     "langchain",
     "langchain-mcp-adapters",
     "langchain-ollama",
-    "mcp[cli]>=1.28.0",
     "pyjwt>=2.13.0",
     "cryptography>=49.0.0",
+    "openai>=2.44.0",
+    "gradio[mcp]>=6.19.0",
+    "mcp[cli]>=1.28.0",
 ]
 
 [project.optional-dependencies]

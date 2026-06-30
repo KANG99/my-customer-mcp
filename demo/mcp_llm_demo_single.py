@@ -13,7 +13,7 @@
     3. LLM 自主决定调用哪个工具 + 参数
     4. 你执行实际 MCP 工具的逻辑, 把结果返回给 LLM
 """
-
+import os
 import asyncio
 import json
 from typing import Any
@@ -22,7 +22,8 @@ from langchain_core.messages import AIMessage, HumanMessage
 from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain_ollama import ChatOllama
 
-from mock_user_token import generate_mock_token
+import dotenv
+dotenv.load_dotenv()
 
 
 class McpToolExecutor:
@@ -33,7 +34,7 @@ class McpToolExecutor:
              "my-mcp-server": {
                  "transport": "streamable-http",
                  "url": "http://localhost:8000/mcp",
-                 "headers": {"Authorization": f'Bearer {generate_mock_token()}'},
+                 "headers": {"Authorization": os.environ["AUTHORIZATION"]},
              },
          })
         self.tools_map: dict[str, Any] | None = {}

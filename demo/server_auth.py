@@ -6,7 +6,6 @@ import jwt
 from mcp.server.auth.provider import TokenVerifier, AccessToken
 from mcp.server.auth.settings import AuthSettings
 from datetime import datetime, timedelta
-from mock_user_token import generate_mock_token
 
 class CustomerTokenVerifier(TokenVerifier):
     async def verify_token(self, token: str) -> AccessToken:
@@ -20,9 +19,4 @@ class CustomerTokenVerifier(TokenVerifier):
     
 
 if __name__ == "__main__":
-    try:
-        payload = jwt.decode(generate_mock_token(), "123456",  algorithms=["HS256"])
-    except jwt.exceptions.DecodeError:
-        print("Invalid token")
-    else:
-        print(payload)  
+    ...

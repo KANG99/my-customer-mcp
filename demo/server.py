@@ -1,4 +1,4 @@
-from mcp.server.fastmcp import FastMCP
+from mcp.server.fastmcp import FastMCP, Context
 from mcp.server.auth.settings import AuthSettings
 
 from tools.weather import get_weather
@@ -6,6 +6,11 @@ from tools.time_tool import get_time
 from tools.calculator import calculate
 from tools.hello_user import get_username
 from tools.resource import read_poem
+from tools.sampling import generate_task
+from tools.streamable_llm import streamable_llm
+
+
+from prompts.prompts_templates import doc_experts_prompt
 
 from server_auth import CustomerTokenVerifier
 
@@ -69,6 +74,21 @@ def get_username_tool() -> str:
 def poem_resource() -> str:
     """Get the content of the poem."""
     return read_poem()
+
+@mcp.prompt(name="doc_experts",description="文本校对模版")
+def doc_experts_tool(task: str) -> str:
+    """Get the content of the poem."""
+    return doc_experts_prompt.format(task=task)
+
+@mcp.tool()
+async def generate_task_tool(topic: str, ctx: Context) -> str:
+    """Generate a task for a given topic."""
+    return await generate_task(topic, ctx)
+
+@mcp.tool()
+async def streamable_llm_tool(prompt: str, ctx: Context) -> str:
+    """Stream a response from a given prompt."""
+    return await streamable_llm(prompt, ctx)
 
 
 if __name__ == "__main__":
